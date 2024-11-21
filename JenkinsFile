@@ -19,5 +19,18 @@ pipeline {
                 '''
             }
         }
+        stage('Test'){
+            agent{
+                docker{
+                    image 'node:latest'
+                }
+            }
+            steps{
+                sh '''
+                echo "Test Stage"
+                npm test
+                '''
+            }
+        }
     }
 }
