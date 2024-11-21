@@ -6,6 +6,7 @@ pipeline {
             agent {
                 docker {
                     image 'node:latest'
+                    reuseNode true
                 }
             }
             steps {
@@ -23,14 +24,21 @@ pipeline {
             agent{
                 docker{
                     image 'node:latest'
+                    reuseNode true
                 }
             }
             steps{
                 sh '''
+                test -f build/index.html
                 echo "Test Stage"
                 npm test
                 '''
             }
+        }
+    }
+    post {
+        always{
+            junit 'test-results/junit.xml'
         }
     }
 }
